@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "github.com/ivanGuerreschi/whatversion/internal/utility"
+)
 
 func main() {
-    fmt.Println("Hello, World!")
+    fmt.Println(utility.GetHome())
 }
