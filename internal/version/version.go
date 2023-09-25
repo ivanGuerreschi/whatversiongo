@@ -1,15 +1,26 @@
 package version
 
 import (
+    "context"
 	"encoding/csv"
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
+
+    "github.com/google/go-github/v55/github"
 )
 
+func fetchLatestRelease(owner, repo string) (*github.RepositoryRelease, error) {
+    client := github.NewClient(nil)
+    ctx := context.Background()
+    latest, _, err := client.Repositories.GetLatestRelease(ctx, owner, repo)
+    return latest, err
+}
+
 func GetVersion(csvFile string) {
-	file, err := os.Open(csvFile)
+
+    file, err := os.Open(csvFile)
 	if err != nil {
 		log.Fatal("Error while reading the file", err)
 	}
@@ -30,6 +41,12 @@ func GetVersion(csvFile string) {
 			log.Fatal(err)
 		}
 
-		fmt.Print(string(stdout))
+        latest, err := fetchLatestRelease(item[1], item[2])
+        if err != nil {
+		    log.Fatal(err)
+		}
+       
+        fmt.Printf("Local version of %s %slast version in GitHub repo is %s\nurl %s\n\n", item[0], string(stdout), latest.GetTagName(), latest.GetHTMLURL())
+
 	}
 }
