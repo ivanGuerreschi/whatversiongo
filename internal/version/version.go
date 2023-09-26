@@ -1,3 +1,8 @@
+// Copyright 2023 Ivan Guerreschi. All rights reserved.
+//
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package version
 
 import (
@@ -46,9 +51,9 @@ func GetVersion(csvFile string) {
 	}
 
 	fmt.Printf("Local version of %s %slast version in GitHub repo is %s\nurl %s\n\n",
-	    item[0],
-	    string(stdout),
-	    latest.GetTagName(),
-	    latest.GetHTMLURL())
+		item[0],
+		string(stdout),
+		latest.GetTagName(),
+		latest.GetHTMLURL())
 	}
 }
